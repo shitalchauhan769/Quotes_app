@@ -35,31 +35,41 @@ class _QuotesScreenState extends State<QuotesScreen> {
   }
 
   Widget Quotes(int index) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 150,
-      decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.5),
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(50), bottomLeft: Radius.circular(50))),
-      child: Column(
-        children: [
-          Text(
-            "${l1[index].quotes}",
-            style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+    return InkWell(onTap: () {
+      Navigator.pushNamed(context,'edit',arguments: l1[index]);
+    },
+      child: Container(
+
+        margin: EdgeInsets.all(10),
+        height: 200,
+        decoration: BoxDecoration(
+            color: Colors.red.withOpacity(0.5),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(50), bottomLeft: Radius.circular(50))),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+
+            children: [
+              Padding(padding: EdgeInsets.all(5)),
+              Text(
+                "${l1[index].quotes}",
+                style: TextStyle(
+                    color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                "\- ${l1[index].name}",
+                style: TextStyle(
+                  color: Colors.black.withOpacity(0.5),
+                  fontSize: 18,
+                ),
+              )
+            ],
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            "${l1[index].name}",
-            style: TextStyle(
-              color: Colors.black.withOpacity(0.5),
-              fontSize: 18,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
