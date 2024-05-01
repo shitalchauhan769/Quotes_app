@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text("Would you like to continue learning how to use Flutter alerts?",style: TextStyle(fontSize: 18,color: Colors.black),),
+              title: Text("Would you like to continue learning how to use Flutter alerts?",style: TextStyle(fontFamily: 'Sevillan'),),
               actions: [
                SizedBox(height: 20,),
                 Row(
@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: const Text(
                           "grid",
-                          style: TextStyle(color: Colors.black,fontSize: 18),
                         )),
                     TextButton(
                         onPressed: () {
@@ -41,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         child: const Text(
                           "ist",
-                          style: TextStyle(color: Colors.black,fontSize: 18),
                         )),
                   ],
                 )
@@ -56,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
           title: (const Text(
-            "Quotes",style: TextStyle(color: Colors.white),
+            "Quotes",
           )),
           actions: [
             ElevatedButton(
@@ -68,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: const Text(
                   "click",
-                  style: TextStyle(color: Colors.black,fontSize: 18),
+
                 )),
 
           ],
@@ -120,10 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(5)),
           child: Text(
             "${category[index].name}",
-            style: const TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
+
           ),
         ),
       ),

@@ -22,7 +22,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.blueAccent,
         title: const Text(
-          "title",style: TextStyle(color: Colors.white),
+          "title",style: TextStyle(fontFamily: 'Sevillana'),
         ),
       ),
       body: ListView.builder(
@@ -55,7 +55,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               Text(
                 "${l1[index].quotes}",
                 style: TextStyle(
-                    color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+                    fontFamily: 'Sevillana'),
               ),
               SizedBox(
                 height: 5,
@@ -63,8 +63,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               Text(
                 "\- ${l1[index].name}",
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
-                  fontSize: 18,
+                  fontFamily: 'Sevillana'
                 ),
               )
             ],

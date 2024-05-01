@@ -87,6 +87,35 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+  fonts:
+     -  family: Sevillana
+        fonts:
+         -  asset: assets/fonts/Sevillana.ttf
+#
+
+     -  family: RobotoMono
+        fonts:
+          -  asset: assets/fonts/RobotoMono.ttf
+
+     -  family: OpenSans
+        fonts:
+          -  asset: assets/fonts/OpenSans.ttf
+
+     -  family: Montserrat
+        fonts:
+          -  asset: assets/fonts/Montserrat.ttf
+
+     - family: Mukta
+       fonts:
+         -  asset: assets/fonts/Mukta.ttf
+
+     - family:
+       fonts:
+         - asset: assets/fonts/Nunito.ttf
+
+
+
+
 
   #
   # For details regarding fonts from package dependencies,
