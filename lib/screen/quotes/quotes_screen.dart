@@ -54,7 +54,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               Text(
                 "${l1[index].quotes}",
                 style: const TextStyle(
-                    fontFamily: 'Sevillana',fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),
+                    fontFamily: 'Sevillana',fontWeight: FontWeight.bold,color: Colors.black),
               ),
               const SizedBox(
                 height: 5,
@@ -62,7 +62,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
               Text(
                 "- ${l1[index].name}",
                 style: const TextStyle(
-                 fontSize: 18,color: Colors.black,
+                 color: Colors.black,
                   fontWeight: FontWeight.bold
                 ),
               )

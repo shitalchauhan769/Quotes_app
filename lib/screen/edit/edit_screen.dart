@@ -1,12 +1,15 @@
-// import 'dart:js_interop';
-// import 'dart:typed_data';
+import 'dart:io';
 
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:quotes_app/screen/model/qoute_model.dart';
-import 'dart:ui'as ui;
+import 'dart:ui' as ui;
+
+import 'package:share_plus/share_plus.dart';
 
 class EditScreen extends StatefulWidget {
   const EditScreen({super.key});
@@ -37,17 +40,23 @@ class _EditScreenState extends State<EditScreen> {
   bool italicOn = false;
   bool underline = false;
   FontWeight bold = FontWeight.normal;
-  FontStyle Style=FontStyle.normal;
-  TextDecoration line=TextDecoration.underline;
-  TextAlign c1=TextAlign.center;
+  FontStyle Style = FontStyle.normal;
+  TextDecoration line = TextDecoration.underline;
+  TextAlign c1 = TextAlign.center;
   GlobalKey rapaintkey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    QuoteModel model = ModalRoute.of(context)!.settings.arguments as QuoteModel;
+    QuoteModel model = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as QuoteModel;
     return Scaffold(
       appBar: AppBar(
-        title: Text("edit"),
+        title: Text(
+          "edit",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Center(
         child: Column(
@@ -76,36 +85,30 @@ class _EditScreenState extends State<EditScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            SelectableText(
                               "${model.quotes}",
                               style: TextStyle(
                                   color: Selected,
                                   fontFamily: textstyle,
-                                  fontSize: 24,
-                                fontWeight: FontWeight.normal,fontStyle:Style,decoration: TextDecoration.underline
-                              ),
+                                  fontSize: 20,
+                                  fontWeight: bold,
+                                  fontStyle: Style,
+                                  decoration: TextDecoration.underline),
                               textAlign: c1,
-              
-              
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             Align(
                               alignment: Alignment.bottomRight,
-                              child: Text(
-                                "-${model.name}",
-                                style: TextStyle(
+                              child: SelectableText("-${model.name}",
+                                  style: TextStyle(
                                     color: Selected,
                                     fontFamily: textstyle,
-                                    fontSize: 25,
-                                  fontWeight: bold,
-              
-                                ),
-                                textAlign:c1
-              
-                              ),
-              
+                                    fontSize: 20,
+                                    fontWeight: bold,
+                                  ),
+                                  textAlign: c1),
                             ),
                           ],
                         ),
@@ -157,16 +160,19 @@ class _EditScreenState extends State<EditScreen> {
                       icon: Icon(Icons.text_format_outlined)),
                   IconButton.filledTonal(
                       onPressed: () {
-                        setState(() async{
-                            RepaintBoundary boundary = rapaintkey.currentContext!.findRenderObject() as  RepaintBoundary;
-
-                            //  ui.Image image=boundary.to boudary;
-                            // ByteData? byteData = await image.toByteData(
-                            //     format: ui.ImageByteFormat.png);
-                            // var bytes = byteData!.buffer.asUint8List();
-
+                        setState(() async {
+                          saveImage();
                         });
-                      }, icon: Icon(Icons.save)),
+                      },
+                      icon: Icon(Icons.save_alt)),
+                  IconButton.filledTonal(
+                      onPressed: () {
+                        setState(() async {
+                          String path= await saveImage();
+                          await Share.shareXFiles([XFile(path)]);
+                        });
+                      },
+                      icon: Icon(Icons.share)),
                 ],
               ),
             ),
@@ -174,52 +180,52 @@ class _EditScreenState extends State<EditScreen> {
               visible: ColorOn,
               child: Expanded(
                   child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5),
-                itemCount: Colors.primaries.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          Selected = Selected = Colors.primaries[index];
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.primaries[index]),
-                      ),
-                    ),
-                  );
-                },
-              )),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 5),
+                    itemCount: Colors.primaries.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              Selected = Selected = Colors.primaries[index];
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.primaries[index]),
+                          ),
+                        ),
+                      );
+                    },
+                  )),
             ),
             Visibility(
               visible: imageOn,
               child: Expanded(
                   child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemCount: imageList.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        imagePart = imageList[index];
-                      });
-                    },
-                    child: Container(
-                      child: Image(
-                        image: AssetImage(
-                          "${imageList[index]}",
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3),
+                    itemCount: imageList.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            imagePart = imageList[index];
+                          });
+                        },
+                        child: Container(
+                          child: Image(
+                            image: AssetImage(
+                              "${imageList[index]}",
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                },
-              )),
+                      );
+                    },
+                  )),
             ),
             Visibility(
               visible: textOn,
@@ -238,7 +244,9 @@ class _EditScreenState extends State<EditScreen> {
                           width: 80,
                           alignment: Alignment.center,
                           child: const Text(
-                            "enter text font style",style: TextStyle(fontSize: 30),)),
+                            "enter text font style",
+                            style: TextStyle(fontSize: 30),
+                          )),
                     );
                   },
                 ),
@@ -253,22 +261,21 @@ class _EditScreenState extends State<EditScreen> {
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                            bold=FontWeight.bold;
-
+                            bold = FontWeight.bold;
                           });
                         },
                         icon: Icon(Icons.format_bold_outlined)),
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                           Style=FontStyle.italic;
+                            Style = FontStyle.italic;
                           });
                         },
                         icon: Icon(Icons.format_italic)),
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                            line=TextDecoration.underline;
+                            line = TextDecoration.underline;
                           });
                         },
                         icon: Icon(Icons.format_underline)),
@@ -280,22 +287,24 @@ class _EditScreenState extends State<EditScreen> {
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                            c1=TextAlign.center;
+                            c1 = TextAlign.center;
                           });
                         },
                         icon: Icon(Icons.format_align_center)),
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                            c1=TextAlign.left;
+                            c1 = TextAlign.left;
                           });
-                        }, icon: Icon(Icons.format_align_left)),
+                        },
+                        icon: Icon(Icons.format_align_left)),
                     IconButton.filledTonal(
                         onPressed: () {
                           setState(() {
-                            c1=TextAlign.end;
+                            c1 = TextAlign.end;
                           });
-                        }, icon: Icon(Icons.format_align_right)),
+                        },
+                        icon: Icon(Icons.format_align_right)),
                   ],
                 ),
               ],
@@ -305,6 +314,27 @@ class _EditScreenState extends State<EditScreen> {
       ),
     );
   }
-}
 
+  Future<String> saveImage() async {
+    RenderRepaintBoundary boundary =
+    rapaintkey.currentContext!.findRenderObject()
+    as RenderRepaintBoundary;
+    ui.Image image = await boundary.toImage();
+    ByteData? byteData = await image.toByteData(
+        format: ui.ImageByteFormat.png);
+    var bytes = byteData!.buffer.asUint8List();
+
+    if (Platform.isAndroid) {
+      File("/storage/emulated/0/Downloader")
+          .writeAsBytes(bytes);
+      return "/storage/emulated/0/Downloader";
+    }
+    else {
+      Directory? dir = await getDownloadsDirectory();
+      await File("${(dir!).path}/my.png")
+          .writeAsBytes(bytes);
+      return "${(dir).path}/my.png";
+    }
+  }
+}
 
