@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quotes_app/screen/model/qoute_model.dart';
-
 import '../../until/globel.dart';
 
 class QuotesScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.blueAccent,
         title: const Text(
-          "title",style: TextStyle(fontFamily: 'Sevillana'),
+          "title",style: TextStyle(fontFamily: 'Sevillana',color: Colors.white,fontSize: 20),
         ),
       ),
       body: ListView.builder(
@@ -44,7 +43,7 @@ class _QuotesScreenState extends State<QuotesScreen> {
         height: 200,
         decoration: BoxDecoration(
             color: Colors.red.withOpacity(0.5),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(50), bottomLeft: Radius.circular(50))),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -54,16 +53,17 @@ class _QuotesScreenState extends State<QuotesScreen> {
               Padding(padding: EdgeInsets.all(5)),
               Text(
                 "${l1[index].quotes}",
-                style: TextStyle(
-                    fontFamily: 'Sevillana'),
+                style: const TextStyle(
+                    fontFamily: 'Sevillana',fontSize: 15,fontWeight: FontWeight.bold,color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
-                "\- ${l1[index].name}",
-                style: TextStyle(
-                  fontFamily: 'Sevillana'
+                "- ${l1[index].name}",
+                style: const TextStyle(
+                 fontSize: 18,color: Colors.black,
+                  fontWeight: FontWeight.bold
                 ),
               )
             ],

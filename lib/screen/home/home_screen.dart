@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           backgroundColor: Colors.blueAccent,
           title: (const Text(
-            "Quotes",
+            "Quotes",style: TextStyle(color: Colors.white),
           )),
           actions: [
             ElevatedButton(
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 },
                 child: const Text(
-                  "click",
+                  "click",style:  TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold),
 
                 )),
 
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.black.withOpacity(0.5),
               borderRadius: BorderRadius.circular(5)),
           child: Text(
-            "${category[index].name}",
+            "${category[index].name}",style: TextStyle(color: Colors.grey.shade200,fontSize: 20),
 
           ),
         ),

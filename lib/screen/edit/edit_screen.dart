@@ -1,8 +1,12 @@
+// import 'dart:js_interop';
+// import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quotes_app/screen/model/qoute_model.dart';
+import 'dart:ui'as ui;
 
 class EditScreen extends StatefulWidget {
   const EditScreen({super.key});
@@ -36,6 +40,8 @@ class _EditScreenState extends State<EditScreen> {
   FontStyle Style=FontStyle.normal;
   TextDecoration line=TextDecoration.underline;
   TextAlign c1=TextAlign.center;
+  GlobalKey rapaintkey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     QuoteModel model = ModalRoute.of(context)!.settings.arguments as QuoteModel;
@@ -46,63 +52,66 @@ class _EditScreenState extends State<EditScreen> {
       body: Center(
         child: Column(
           children: [
-            Center(
-              child: Container(
-                margin: EdgeInsets.all(10),
-                height: 350,
-                width: 400,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                ),
-                alignment: Alignment.center,
-                child: Stack(
-                  children: [
-                    Image(
-                      image: AssetImage(imagePart),
-                      fit: BoxFit.cover,
-                      height: 350,
-                      width: 400,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${model.quotes}",
-                            style: TextStyle(
-                                color: Selected,
-                                fontFamily: textstyle,
-                                fontSize: 24,
-                              fontWeight: FontWeight.normal,fontStyle:Style,decoration: TextDecoration.underline
-                            ),
-                            textAlign: c1,
-
-
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text(
-                              "-${model.name}",
+            RepaintBoundary(
+              key: rapaintkey,
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  height: 350,
+                  width: 400,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                  ),
+                  alignment: Alignment.center,
+                  child: Stack(
+                    children: [
+                      Image(
+                        image: AssetImage(imagePart),
+                        fit: BoxFit.cover,
+                        height: 350,
+                        width: 400,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${model.quotes}",
                               style: TextStyle(
                                   color: Selected,
                                   fontFamily: textstyle,
-                                  fontSize: 25,
-                                fontWeight: bold,
-
+                                  fontSize: 24,
+                                fontWeight: FontWeight.normal,fontStyle:Style,decoration: TextDecoration.underline
                               ),
-                              textAlign:c1
-
+                              textAlign: c1,
+              
+              
                             ),
-
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                "-${model.name}",
+                                style: TextStyle(
+                                    color: Selected,
+                                    fontFamily: textstyle,
+                                    fontSize: 25,
+                                  fontWeight: bold,
+              
+                                ),
+                                textAlign:c1
+              
+                              ),
+              
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -147,7 +156,17 @@ class _EditScreenState extends State<EditScreen> {
                       },
                       icon: Icon(Icons.text_format_outlined)),
                   IconButton.filledTonal(
-                      onPressed: () {}, icon: Icon(Icons.save)),
+                      onPressed: () {
+                        setState(() async{
+                            RepaintBoundary boundary = rapaintkey.currentContext!.findRenderObject() as  RepaintBoundary;
+
+                            //  ui.Image image=boundary.to boudary;
+                            // ByteData? byteData = await image.toByteData(
+                            //     format: ui.ImageByteFormat.png);
+                            // var bytes = byteData!.buffer.asUint8List();
+
+                        });
+                      }, icon: Icon(Icons.save)),
                 ],
               ),
             ),
@@ -205,9 +224,7 @@ class _EditScreenState extends State<EditScreen> {
             Visibility(
               visible: textOn,
               child: Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
+                child: ListView.builder(
                   itemCount: textList.length,
                   itemBuilder: (context, index) {
                     return InkWell(
@@ -217,12 +234,11 @@ class _EditScreenState extends State<EditScreen> {
                         });
                       },
                       child: Container(
-                          height: 10,
+                          height: 50,
+                          width: 80,
                           alignment: Alignment.center,
                           child: const Text(
-                            "enter text font style",
-                            style: TextStyle(fontSize: 25),
-                          )),
+                            "enter text font style",style: TextStyle(fontSize: 30),)),
                     );
                   },
                 ),
@@ -290,3 +306,5 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
+
+
